@@ -55,6 +55,9 @@ public class InventorChimpumCreateService implements AbstractCreateService<Inven
 	public void unbind(final Request<Chimpum> request, final Chimpum entity, final Model model) {
 		request.unbind(entity, model, "title", "description", "budget", "creationMoment", "startDate", "endDate", "moreInfo");	
 		model.setAttribute("itemId", request.getModel().getInteger("itemId"));
+		if(entity.getCode()!=null) {
+			model.setAttribute("code", entity.getCode().substring(0, 3));
+		}
 	}
 
 	@Override
