@@ -1,0 +1,15 @@
+administrator.configuration.form.label.system-currency = System currency:
+administrator.configuration.form.label.accepted-currencies = Accepted currencies:
+administrator.configuration.form.label.strong-spam-terms-en = Strong spam terms (English):
+administrator.configuration.form.label.strong-spam-terms-es = Strong spam terms (Spanish):
+administrator.configuration.form.label.strong-threshhold = Strong threshhold:
+administrator.configuration.form.label.weak-spam-terms-en = Weak spam terms (English):
+administrator.configuration.form.label.weak-spam-terms-es = Weak spam terms (Spanish):
+administrator.configuration.form.label.weak-threshhold = Weak threshhold:
+
+administrator.configuration.form.button.update = Update Configuration
+
+administrator.configuration.invalid-currency.error = There are invalid currencies
+administrator.configuration.form.error.systemCurrency = The currency must be in accepted currencies
+administrator.configuration.form.error.strongTreshold = The value must be beetween 0 and 100
+administrator.configuration.form.error.weakTreshold = The value must be beetween 0 and 100

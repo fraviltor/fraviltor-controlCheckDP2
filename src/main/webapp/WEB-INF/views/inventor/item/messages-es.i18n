@@ -1,0 +1,34 @@
+
+inventor.item.list.label.name = Nombre
+inventor.item.list.label.code = Código
+inventor.item.list.label.technology = Tecnología
+inventor.item.list.label.description = Descripción
+inventor.item.list.label.retail-price = Precio de salida
+inventor.item.list.label.retail-price-default = Precio de salida (conversión)
+inventor.item.list.label.info = Información
+inventor.item.list.label.item-type = Tipo de Item
+inventor.item.list.label.published = Publicado
+
+inventor.item.form.label.name = Nombre
+inventor.item.form.label.code = Código
+inventor.item.form.label.technology = Tecnología
+inventor.item.form.label.description = Descripción
+inventor.item.form.label.retail-price = Precio de salida
+inventor.item.form.label.retail-price-conversion = Precio de salida (conversión)
+inventor.item.form.label.info = Información
+inventor.item.form.label.item-type = Tipo de Item
+inventor.item.form.label.published = Publicada
+
+inventor.item.form.button.update = Actualizar
+inventor.item.form.button.delete = Eliminar
+inventor.item.form.button.publish = Publicar
+inventor.item.list.button.create = Crear
+inventor.item.form.button.create-chimpum = Crear Chimpum
+inventor.item.form.button.show-chimpum = Mostrar Chimpum
+
+inventor.item.form.error.duplicated-code = Código duplicado
+inventor.item.form.error.retail-price-amount-negative-or-zero = El precio debe ser positivo
+inventor.item.form.error.retail-price-currency-invalid = La divisa no es válida
+
+alert-message.form.spam = Algunas palabras empleadas no son adecuadas
+
