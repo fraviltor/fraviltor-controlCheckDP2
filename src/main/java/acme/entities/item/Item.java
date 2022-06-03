@@ -14,7 +14,7 @@ import javax.validation.constraints.Pattern;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.URL;
 
-import acme.entities.chimpum.Chimpum;
+import acme.entities.nompa.Nompa;
 import acme.framework.datatypes.Money;
 import acme.framework.entities.AbstractEntity;
 import acme.roles.Inventor;
@@ -72,6 +72,6 @@ public class Item extends AbstractEntity{
 	
 	@Valid
 	@OneToOne(optional = true)
-	protected Chimpum chimpum;
+	protected Nompa nompa;
 
 }

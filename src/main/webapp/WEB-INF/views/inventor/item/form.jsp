@@ -35,11 +35,11 @@
 		</jstl:when>
 		<jstl:when test="${command == 'show' && published == true}">
 			<jstl:choose>
-				<jstl:when test="${chimpum==null }">
-					<acme:button code="inventor.item.form.button.create-chimpum" action="/inventor/chimpum/create?itemId=${itemId}"/>
+				<jstl:when test="${nompa==null }">
+					<acme:button code="inventor.item.form.button.create-nompa" action="/inventor/nompa/create?itemId=${itemId}"/>
 				</jstl:when>
-				<jstl:when test="${chimpum!=null }">
-					<acme:button code="inventor.item.form.button.show-chimpum" action="/inventor/chimpum/show?id=${chimpum}"/>
+				<jstl:when test="${nompa!=null }">
+					<acme:button code="inventor.item.form.button.show-nompa" action="/inventor/nompa/show?id=${nompa}"/>
 				</jstl:when>
 			</jstl:choose>
 		</jstl:when>

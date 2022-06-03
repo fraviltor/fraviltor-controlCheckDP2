@@ -61,19 +61,20 @@ public interface AdministratorDashboardRepository extends AbstractRepository {
 	@Query("SELECT p.budget.currency, max(p.budget.amount) FROM Patronage p WHERE p.status = :status GROUP BY p.budget.currency")
 	Collection<Tuple> maximumBudgetPatronagesByStatus(Status status);
 	
-	//Chimpum
-	@Query("select 1.0 * count(a) / (select count(b) FROM Item b) FROM Chimpum a")
-	Double ratioOfItemsWithChimpum();
+	//Nompa
+	@Query("select 1.0 * count(a) / (select count(b) FROM Item b WHERE b.itemType = acme.entities.item.ItemType.COMPONENT) FROM Nompa a")
+	Double ratioOfComponentsWithNompa();
+	
 		
-	@Query("select avg(c.budget.amount) FROM Chimpum c WHERE c.budget.currency = :currency")
-	Double averageBudgetOfChimpumByCurrency(String currency);
+	@Query("select avg(n.quantity.amount) FROM Nompa n WHERE n.quantity.currency = :currency")
+	Double averageQuantityOfNompaByCurrency(String currency);
 		
-	@Query("select stddev(c.budget.amount) FROM Chimpum c WHERE c.budget.currency = :currency")
-	Double deviationBudgetOfChimpumByCurrency(String currency);
+	@Query("select stddev(n.quantity.amount) FROM Nompa n WHERE n.quantity.currency = :currency")
+	Double deviationQuantityOfNompaByCurrency(String currency);
 		
-	@Query("select min(c.budget.amount) FROM Chimpum  c WHERE c.budget.currency = :currency")
-	Double minimumBudgetOfChimpumByCurrency(String currency);
+	@Query("select min(n.quantity.amount) FROM Nompa  n WHERE n.quantity.currency = :currency")
+	Double minimumQuantityOfNompaByCurrency(String currency);
 		
-	@Query("select max(c.budget.amount) FROM Chimpum c WHERE c.budget.currency = :currency")
-	Double maximumBudgetOfChimpumByCurrency(String currency);
+	@Query("select max(n.quantity.amount) FROM Nompa n WHERE n.quantity.currency = :currency")
+	Double maximumQuantityOfNompaByCurrency(String currency);
 }

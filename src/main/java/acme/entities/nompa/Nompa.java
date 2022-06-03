@@ -1,8 +1,7 @@
-package acme.entities.chimpum;
+package acme.entities.nompa;
 
 import java.util.Date;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -23,13 +22,12 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
-public class Chimpum extends AbstractEntity{
+public class Nompa extends AbstractEntity{
 	
 	protected static final long serialVersionUID = 1L;
 	
-	@Column(unique=true)
 	@NotBlank
-	@Pattern(regexp = "^[A-Z]{3}-[0-9]{2}-[0-9]{2}-[0-9]{2}$")
+	@Pattern(regexp = "^\\w{2}\\d{2}\\w{2}-[0-9]{6}$")
 	protected String code;
 
 	@NotNull
@@ -39,11 +37,11 @@ public class Chimpum extends AbstractEntity{
 	
 	@NotBlank
 	@Length(min=1, max = 100)
-	protected String title;
+	protected String theme;
 	
 	@NotBlank
 	@Length(min=1, max = 255)
-	protected String description;
+	protected String statement;
 	
 	@NotNull
     @Temporal(TemporalType.TIMESTAMP)
@@ -55,10 +53,10 @@ public class Chimpum extends AbstractEntity{
 	
 	@NotNull
 	@Valid
-	protected Money budget;
+	protected Money quantity;
 
 	@URL
-	protected String moreInfo;
+	protected String additionalInfo;
 	
 	//Relationships
 //	@NotNull

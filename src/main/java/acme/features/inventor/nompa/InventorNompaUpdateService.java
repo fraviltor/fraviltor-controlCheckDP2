@@ -1,4 +1,4 @@
-package acme.features.inventor.chimpum;
+package acme.features.inventor.nompa;
 
 import java.time.LocalDate;
 import java.time.ZoneId;
@@ -10,72 +10,75 @@ import java.util.concurrent.TimeUnit;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import acme.entities.chimpum.Chimpum;
 import acme.entities.item.Item;
+import acme.entities.nompa.Nompa;
 import acme.entities.systemConfiguration.SystemConfiguration;
 import acme.features.authenticated.systemConfiguration.AuthenticatedSystemConfigurationRepository;
 import acme.features.inventor.item.InventorItemRepository;
 import acme.framework.components.models.Model;
 import acme.framework.controllers.Errors;
 import acme.framework.controllers.Request;
-import acme.framework.services.AbstractCreateService;
+import acme.framework.services.AbstractUpdateService;
 import acme.roles.Inventor;
 import spamDetector.SpamDetector;
 
 @Service
-public class InventorChimpumCreateService implements AbstractCreateService<Inventor, Chimpum>{
+public class InventorNompaUpdateService implements AbstractUpdateService<Inventor,Nompa>{
 	
 	@Autowired
-	protected InventorChimpumRepository repository;
+	protected InventorNompaRepository repository;
 	@Autowired
 	protected InventorItemRepository itemRepository;
 	@Autowired
 	protected AuthenticatedSystemConfigurationRepository systemConfigRepository;
 
 	@Override
-	public boolean authorise(final Request<Chimpum> request) {
+	public boolean authorise(final Request<Nompa> request) {
 		assert request != null;
-		Item item;
-		final int inventorId = request.getPrincipal().getActiveRoleId();
-		final int itemId = request.getModel().getInteger("itemId");
-		item = this.itemRepository.findOneById(itemId);
-		final int itemInventorId = this.itemRepository.findOneById(itemId).getInventor().getId();
-
-		return  inventorId == itemInventorId && item.isPublished(); 
-	}
-
-	@Override
-	public void bind(final Request<Chimpum> request, final Chimpum entity, final Errors errors) {
-		request.bind(entity, errors, "code", "title", "description", "budget", "creationMoment", "startDate", "endDate", "moreInfo");
-		final LocalDate cm =  entity.getCreationMoment().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-		entity.setCode(entity.getCode()+"-"+this.codeGenerator(cm));
-	}
-
-	@Override
-	public void unbind(final Request<Chimpum> request, final Chimpum entity, final Model model) {
-		request.unbind(entity, model, "title", "description", "budget", "creationMoment", "startDate", "endDate", "moreInfo");	
-		model.setAttribute("itemId", request.getModel().getInteger("itemId"));
-		if(entity.getCode()!=null) {
-			model.setAttribute("code", entity.getCode().substring(0, 3));
-		}
-	}
-
-	@Override
-	public Chimpum instantiate(final Request<Chimpum> request) {
-		assert request != null;
+		boolean result;
 		
-		Chimpum result;
-		Date moment;
-		moment = new Date(System.currentTimeMillis() - 1);
-	
-		result = new Chimpum();
-		result.setCreationMoment(moment);
-//		result.setCode(this.codeGenerator(moment));
+		int chimpumId;
+		Item item;
+
+		chimpumId = request.getModel().getInteger("id");
+		item = this.repository.findOneComponentByNompaId(chimpumId);
+		result = item.getInventor().getId() == request.getPrincipal().getActiveRoleId();
+		
 		return result;
 	}
 
 	@Override
-	public void validate(final Request<Chimpum> request, final Chimpum entity, final Errors errors) {
+	public void bind(final Request<Nompa> request, final Nompa entity, final Errors errors) {
+		assert request != null;
+		assert entity != null;
+		assert errors != null;
+		
+		request.bind(entity, errors, "code", "theme", "statement","creationMoment", "quantity", "startDate", "endDate", "additionalInfo");
+	}
+
+	@Override
+	public void unbind(final Request<Nompa> request, final Nompa entity, final Model model) {
+		assert request != null;
+		assert entity != null;
+		assert model != null;
+		
+		request.unbind(entity, model, "code", "theme", "statement","creationMoment", "quantity", "startDate", "endDate", "additionalInfo");	
+	}
+
+	@Override
+	public Nompa findOne(final Request<Nompa> request) {
+		assert request != null;
+		Nompa result;
+		int id;
+		
+		id = request.getModel().getInteger("id");
+		result = this.repository.findOneNompaById(id);
+		
+		return result;
+	}
+
+	@Override
+	public void validate(final Request<Nompa> request, final Nompa entity, final Errors errors) {
 		assert request != null;
 		assert entity != null;
 		assert errors != null;
@@ -90,34 +93,39 @@ public class InventorChimpumCreateService implements AbstractCreateService<Inven
         final double WeakThreshold = systemConfig.getWeakThreshold();
         
         if(!errors.hasErrors("code")) {
+        	final String inmutable = entity.getCode().substring(7,13);
+        	final LocalDate cm =  entity.getCreationMoment().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        	final String originalCode = this.codeGenerator(cm);
+    		
+        	errors.state(request, inmutable.equals(originalCode), "code", "inventor.nompa.form.error.inmutable-date-code");
         	
-    		Chimpum existing;
-    		existing = this.repository.findOneChimpumByCode(entity.getCode());
+    		Nompa existing;
+    		existing = this.repository.findOneNompaByCode(entity.getCode());
     		
     		if(existing!=null) {
-    			errors.state(request, existing.getId()==entity.getId(), "code", "inventor.chimpum.form.error.duplicated-code");
+    			errors.state(request, existing.getId()==entity.getId(), "code", "inventor.nompa.form.error.duplicated-code");
     		}
     	}
-		
-        if(!errors.hasErrors("title")) {
+        
+        if(!errors.hasErrors("theme")) {
             final boolean res;
-            res = SpamDetector.spamDetector(entity.getTitle(),StrongEN,StrongES,WeakEN,WeakES,StrongThreshold,WeakThreshold);
-            errors.state(request, res, "title", "alert-message.form.spam");
+            res = SpamDetector.spamDetector(entity.getTheme(),StrongEN,StrongES,WeakEN,WeakES,StrongThreshold,WeakThreshold);
+            errors.state(request, res, "theme", "alert-message.form.spam");
         }
         
-        if(!errors.hasErrors("description")) {
+        if(!errors.hasErrors("statement")) {
             final boolean res;
-            res = SpamDetector.spamDetector(entity.getDescription(),StrongEN,StrongES,WeakEN,WeakES,StrongThreshold,WeakThreshold);
-            errors.state(request, res, "description", "alert-message.form.spam");
+            res = SpamDetector.spamDetector(entity.getStatement(),StrongEN,StrongES,WeakEN,WeakES,StrongThreshold,WeakThreshold);
+            errors.state(request, res, "statement", "alert-message.form.spam");
         }
         
-        if(!errors.hasErrors("moreInfo")) {
+        if(!errors.hasErrors("additionalInfo")) {
             final boolean res;
-            res = SpamDetector.spamDetector(entity.getMoreInfo(),StrongEN,StrongES,WeakEN,WeakES,StrongThreshold,WeakThreshold);
-            errors.state(request, res, "moreInfo", "alert-message.form.spam");
+            res = SpamDetector.spamDetector(entity.getAdditionalInfo(),StrongEN,StrongES,WeakEN,WeakES,StrongThreshold,WeakThreshold);
+            errors.state(request, res, "additionalInfo", "alert-message.form.spam");
         }
 		
-		if(!errors.hasErrors("budget")) {
+		if(!errors.hasErrors("quantity")) {
 			final List<String> currencies = new ArrayList<>();
 			String currency;
 			Double amount;
@@ -126,12 +134,12 @@ public class InventorChimpumCreateService implements AbstractCreateService<Inven
 				currencies.add(c.trim());
 			}
 			
-			currency = entity.getBudget().getCurrency();
+			currency = entity.getQuantity().getCurrency();
 			
-			amount = entity.getBudget().getAmount();
+			amount = entity.getQuantity().getAmount();
 			
-			errors.state(request, currencies.contains(currency) , "budget","inventor.chimpum.form.error.currency");
-			errors.state(request, amount>=0.00 , "budget","inventor.chimpum.form.error.amount-negative");
+			errors.state(request, currencies.contains(currency) , "budget","inventor.nompa.form.error.currency");
+			errors.state(request, amount>=0.00 , "budget","inventor.nompa.form.error.amount-negative");
 		}
 		
 		if(entity.getStartDate()!=null) {
@@ -160,16 +168,11 @@ public class InventorChimpumCreateService implements AbstractCreateService<Inven
 	}
 
 	@Override
-	public void create(final Request<Chimpum> request, final Chimpum entity) {
+	public void update(final Request<Nompa> request, final Nompa entity) {
 		assert request != null;
 		assert entity != null;
-		Item item;
-		
+
 		this.repository.save(entity);
-		final int itemId = request.getModel().getInteger("itemId");
-		item = this.itemRepository.findOneById(itemId);
-		item.setChimpum(entity);
-		this.itemRepository.save(item);
 	}
 	
 	//Método auxiliar que genera automáticamente el código
@@ -197,7 +200,7 @@ public class InventorChimpumCreateService implements AbstractCreateService<Inven
 			dayCode = day.toString();
 		}
 				
-		result = yearCode + "-" + monthCode + "-" + dayCode;
+		result = monthCode + dayCode + yearCode;
 			
 		return result;
 	}

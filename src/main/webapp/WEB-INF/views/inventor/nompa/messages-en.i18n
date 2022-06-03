@@ -1,0 +1,28 @@
+inventor.nompa.list.label.code = Code
+inventor.nompa.list.label.theme = Theme
+inventor.nompa.list.label.quantity = Quantity
+inventor.nompa.list.label.startDate = Start date
+inventor.nompa.list.label.endDate = End date
+
+inventor.nompa.form.label.code = Code
+inventor.nompa.form.label.theme = Theme
+inventor.nompa.form.label.statement = Statement
+inventor.nompa.form.label.quantity = Quantity
+inventor.nompa.form.label.creationMoment = Creation moment
+inventor.nompa.form.label.startDate = Start date
+inventor.nompa.form.label.endDate = End date
+inventor.nompa.form.label.moreInfo = Additional info
+inventor.nompa.form.label.quantity-conversion = Quantity (conversion)
+inventor.nompa.form.label.item = Associated component
+
+inventor.nompa.form.button.create = Create
+inventor.nompa.form.button.update = Update
+inventor.nompa.form.button.delete = Delete
+inventor.nompa.form.button.item = Show component
+
+inventor.nompa.form.error.duplicated-code = Duplicate code
+inventor.nompa.form.error.inmutable-date-code = The creation date side of the code may not be modified
+inventor.nompa.form.error.currency = The currency is not an accepted currency
+inventor.nompa.form.error.amount-negative = The amount must be positive
+inventor.nompa.form.error.startDate = The period of time must be at least one month after the nompa is created
+inventor.nompa.form.error.endDate = The period of time must be at least one week after the nompa is started

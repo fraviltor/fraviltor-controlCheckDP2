@@ -1,31 +1,31 @@
-package acme.features.inventor.chimpum;
+package acme.features.inventor.nompa;
 
 import javax.annotation.PostConstruct;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
-import acme.entities.chimpum.Chimpum;
+import acme.entities.nompa.Nompa;
 import acme.framework.controllers.AbstractController;
 import acme.roles.Inventor;
 
 @Controller
-public class InventorChimpumController extends AbstractController<Inventor, Chimpum>{
+public class InventorNompaController extends AbstractController<Inventor, Nompa>{
 
 	@Autowired
-	protected InventorChimpumListService listService;
+	protected InventorNompaListService listService;
 
 	@Autowired
-	protected InventorChimpumShowService showService;
+	protected InventorNompaShowService showService;
 	
 	@Autowired
-	protected InventorChimpumCreateService createService;
+	protected InventorNompaCreateService createService;
 	
 	@Autowired
-	protected InventorChimpumUpdateService updateService;
+	protected InventorNompaUpdateService updateService;
 
 	@Autowired
-	protected InventorChimpumDeleteService deleteService;
+	protected InventorNompaDeleteService deleteService;
 
 	@PostConstruct
 	protected void initialise() {

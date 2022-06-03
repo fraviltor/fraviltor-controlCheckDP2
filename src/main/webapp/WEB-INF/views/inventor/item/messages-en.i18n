@@ -22,8 +22,8 @@ inventor.item.form.button.update = Update
 inventor.item.form.button.delete = Delete
 inventor.item.form.button.publish = Publish
 inventor.item.list.button.create = Create
-inventor.item.form.button.create-chimpum = Create Chimpum
-inventor.item.form.button.show-chimpum = Show Chimpum
+inventor.item.form.button.create-nompa = Create Nompa
+inventor.item.form.button.show-nompa = Show Nompa
 
 inventor.item.form.error.duplicated-code = Duplicate code
 inventor.item.form.error.retail-price-amount-negative-or-zero = The amount must be positive

@@ -3,12 +3,12 @@ package acme.features.inventor.item;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import acme.entities.chimpum.Chimpum;
 import acme.entities.item.Item;
 import acme.entities.moneyExchange.MoneyExchange;
+import acme.entities.nompa.Nompa;
 import acme.features.authenticated.moneyExchange.AuthenticatedMoneyExchangePerformService;
 import acme.features.authenticated.systemConfiguration.AuthenticatedSystemConfigurationRepository;
-import acme.features.inventor.chimpum.InventorChimpumRepository;
+import acme.features.inventor.nompa.InventorNompaRepository;
 import acme.framework.components.models.Model;
 import acme.framework.controllers.Request;
 import acme.framework.datatypes.Money;
@@ -25,7 +25,7 @@ public class InventorItemShowService implements AbstractShowService<Inventor, It
 	@Autowired
 	protected AuthenticatedSystemConfigurationRepository systemConfigRepository;
 	@Autowired
-	protected InventorChimpumRepository chimpumRepository;
+	protected InventorNompaRepository nompaRepository;
 
 	// AbstractUpdateService<Authenticated, Consumer> interface -----------------
 
@@ -50,9 +50,9 @@ public class InventorItemShowService implements AbstractShowService<Inventor, It
 		model.setAttribute("newRetailPrice", newRetailPrice);
 		
 		model.setAttribute("itemId", entity.getId());
-		final Chimpum c = entity.getChimpum();
+		final Nompa c = entity.getNompa();
 		if(c!=null) {
-			model.setAttribute("chimpum", c.getId());
+			model.setAttribute("nompa", c.getId());
 		}
 		
 		request.unbind(entity, model, "name", "code", "technology", "description", "retailPrice", "info", "itemType", "published");
@@ -69,14 +69,6 @@ public class InventorItemShowService implements AbstractShowService<Inventor, It
 		result = this.repository.findOneById(id);
 
 		return result;
-
-//		final int id = request.getModel().getInteger("id");
-//		final Item i = this.repository.findOneById(id);
-//		
-//		final Money newRetailPrice = this.moneyExchangePatronages(i);
-//		i.setRetailPrice(newRetailPrice);
-		
-//		return i;
 	}
 	
 	//Método auxiliar cambio de divisa
