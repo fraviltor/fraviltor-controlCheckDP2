@@ -4,7 +4,14 @@
 <%@taglib prefix="acme" uri="urn:jsptagdir:/WEB-INF/tags"%>
 
 <acme:form> 
-<acme:input-textbox code="inventor.chimpum.form.label.code" path="code"/> 
+<jstl:choose>
+	<jstl:when test="${command == 'create'}">
+		<acme:input-textbox code="inventor.chimpum.form.label.code" path="code" placeholder="ABC"/> 
+    </jstl:when>
+    <jstl:when test="${acme:anyOf(command, 'show, update')}">
+		<acme:input-textbox code="inventor.chimpum.form.label.code" path="code" placeholder="ABC-yy-mm-dd"/> 
+    </jstl:when>
+</jstl:choose>
 <acme:input-textbox code="inventor.chimpum.form.label.title" path="title"/> 
 <acme:input-textbox code="inventor.chimpum.form.label.description" path="description"/>
 <acme:input-money code="inventor.chimpum.form.label.budget" path="budget"/> 
